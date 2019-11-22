@@ -5,8 +5,8 @@ DCF77 exploits hardware available on common development boards to generate a 77.
 
 ## Available implementations
 So far two implementations are provided:
-- An ESP32 implementation, initially developed by Luigi Calligaris
-- A Raspberry implementation, initially developed by Renzo Davoli
+- An ESP32 implementation based on the LED control PWM hardware, initially developed by Luigi Calligaris
+- A Raspberry implementation based on the General Purpose Clock generator hardware, initially developed by Renzo Davoli
 
 ## Quick start
 You'll need the following hardware:
