@@ -1,7 +1,5 @@
 # DCFake77
-DCFake77 is an emulator for the DCF77 time signal, used to synchronize clocks, watches, appliances and industrial equipment
-
-DCF77 exploits hardware available on common development boards to generate a 77.5 kHz signal, AM-modulated to encode the DCF77 protocol. 
+DCFake77 is an emulator for the DCF77 time signal, used to synchronize clocks, watches, appliances and industrial equipment. DCFake77 exploits hardware available on common development boards to generate a 77.5 kHz signal, AM-modulated to encode the DCF77 protocol. 
 
 ## Available implementations
 So far two implementations are provided:
