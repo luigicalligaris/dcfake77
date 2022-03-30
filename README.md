@@ -2,7 +2,7 @@
 DCFake77 is an emulator for the DCF77 time signal, used to synchronize clocks, watches, appliances and industrial equipment. DCFake77 exploits hardware available on common development boards to generate a 77.5 kHz signal, AM-modulated to encode the DCF77 protocol. 
 
 ## Available implementations
-So far two implementations are provided:
+So far three implementations are provided:
 - An ESP32 implementation based on the LED control PWM hardware, initially developed by Luigi Calligaris
 - An ESP8266 implementation based on the software PWM code of the SDK, initially developed by Luigi Calligaris
 - A Raspberry implementation based on the General Purpose Clock generator hardware, initially developed by Renzo Davoli
