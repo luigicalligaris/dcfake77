@@ -23,7 +23,7 @@
 //const char* wifi_ssid   = "SET_YOUR_SSID";
 //const char* wifi_pass   = "SET_YOUR_PASS";
 
-const char* ntp_server          = "thrudr";
+const char* ntp_server          = "pool.ntp.org";
 const long  offset_gmt_sec      = -4 * 3600;
 const int   offset_daylight_sec = -3 * 3600;
 
