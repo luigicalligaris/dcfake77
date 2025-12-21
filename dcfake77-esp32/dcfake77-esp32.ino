@@ -24,7 +24,7 @@
 //const char* wifi_pass   = "SET_YOUR_PASS";
 
 const char* ntp_server          = "pool.ntp.org";
-const long  offset_gmt_sec      = -4 * 3600;
+const long  offset_gmt_sec      = -3 * 3600;
 const int   offset_daylight_sec = -3 * 3600;
 
 const unsigned led_pwm_freq       = 77490;
@@ -84,7 +84,9 @@ void setup()
 	WiFi.mode(WIFI_OFF);
 	
 	// Configure LED PWM functionalitites
-	ledcSetClockSource(LEDC_USE_XTAL_CLK);
+	// In ESP-Arduino 3.3.3 the LEDC_USE_XTAL_CLK enum was deprecated and changed to LEDC_USE_APB_CLK
+	//ledcSetClockSource(LEDC_USE_XTAL_CLK);
+	ledcSetClockSource(LEDC_USE_APB_CLK);
 	//ledcSetup(led_pwm_channel, led_pwm_freq, led_pwm_resolution);
 	// Attach the channel to the GPIO to be controlled
 	//ledcAttachPin(led_pwm_pin, led_pwm_channel);
