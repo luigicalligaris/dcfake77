@@ -19,8 +19,9 @@
 #include "dcf77protocol.h"
 // #include "dcf77protocol.c"
 
-// const char* wifi_ssid   = "SET_YOUR_SSID";
-// const char* wifi_pass   = "SET_YOUR_PASS";
+// Set the SSID and password  below  and remove the comment marks
+//const char* wifi_ssid   = "SET_YOUR_SSID";
+//const char* wifi_pass   = "SET_YOUR_PASS";
 
 const char* ntp_server          = "pool.ntp.org";
 const long  offset_gmt_sec      = -3 * 3600;
@@ -28,7 +29,7 @@ const int   offset_daylight_sec = -3 * 3600;
 
 const unsigned led_pwm_freq       = 77490;
 const unsigned led_pwm_channel    =     0;
-const unsigned led_pwm_pin        =    16;
+const unsigned led_pwm_pin        =    21;
 const unsigned led_pwm_resolution =     2;
 const unsigned led_pwm_duty_off   =     0;
 const unsigned led_pwm_duty_on    =     2;
@@ -46,13 +47,6 @@ void PrintLocalTime()
 	}
 	
 	Serial.println(&local_time, "%A, %B %d %Y %H:%M:%S");
-}
-
-void WaitNextSec()
-{
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	delayMicroseconds(1000000-tv.tv_usec);
 }
 
 void setup()
@@ -90,11 +84,15 @@ void setup()
 	WiFi.mode(WIFI_OFF);
 	
 	// Configure LED PWM functionalitites
-	ledcSetup(led_pwm_channel, led_pwm_freq, led_pwm_resolution);
-	
+	// In ESP-Arduino 3.3.3 the LEDC_USE_XTAL_CLK enum was deprecated and changed to LEDC_USE_APB_CLK
+	//ledcSetClockSource(LEDC_USE_XTAL_CLK);
+	ledcSetClockSource(LEDC_USE_APB_CLK);
+	//ledcSetup(led_pwm_channel, led_pwm_freq, led_pwm_resolution);
 	// Attach the channel to the GPIO to be controlled
-	ledcAttachPin(led_pwm_pin, led_pwm_channel);
-	
+	//ledcAttachPin(led_pwm_pin, led_pwm_channel);
+	// Since v3.0 ledcSetup and letcAttachPin are combined in one function
+	ledcAttachChannel(led_pwm_pin, led_pwm_freq, led_pwm_resolution, led_pwm_channel);
+  
 	// Initialize the vector holding the values for the DCF77 encoding
 	if(!getLocalTime(&local_time))
 		Serial.println("Failed to obtain time");
@@ -103,28 +101,28 @@ void setup()
 
 void loop()
 {
-	WaitNextSec();
-	
-	if(!getLocalTime(&local_time))
+  struct timeval tv;
+  
+  if(!getLocalTime(&local_time))
 		Serial.println("Failed to obtain time");
 	
 	if (local_time.tm_sec > 58)
 	{
-		ledcWrite(led_pwm_channel, led_pwm_duty_on);
+		ledcWriteChannel(led_pwm_channel, led_pwm_duty_on);
 	}
 	else
 	{
 		if (dcf77_one_minute_data[local_time.tm_sec] == 0)
 		{
-			ledcWrite(led_pwm_channel, led_pwm_duty_off);
+			ledcWriteChannel(led_pwm_channel, led_pwm_duty_off);
 			delayMicroseconds(100000); //100 ms = 0
-			ledcWrite(led_pwm_channel, led_pwm_duty_on);
+			ledcWriteChannel(led_pwm_channel, led_pwm_duty_on);
 		}
 		else
 		{
-			ledcWrite(led_pwm_channel, led_pwm_duty_off);
+			ledcWriteChannel(led_pwm_channel, led_pwm_duty_off);
 			delayMicroseconds(200000); //200 ms = 1
-			ledcWrite(led_pwm_channel, led_pwm_duty_on);
+			ledcWriteChannel(led_pwm_channel, led_pwm_duty_on);
 		}
 			
 	}
@@ -133,4 +131,6 @@ void loop()
 		dcf77_encode_data(&local_time, dcf77_one_minute_data);
 	
 	PrintLocalTime();
+	gettimeofday(&tv, NULL);
+	delayMicroseconds(1000000-tv.tv_usec); 
 }
