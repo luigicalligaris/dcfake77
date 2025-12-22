@@ -15,7 +15,7 @@ You'll need the following hardware:
 - Using a breadboard to assemble the setup is helpful. The ESP32/8266 can fit straight into the breadboard, but take care that most ESP32 boards do not fit very well on single-tile breadboards, leaving access to just one row of pins on one side of the board. Still, this is enough for our application. The Raspberry Pi will require female-to-male 100-mil jumper wires from the 40-pin header to the breadboard.
 
 ### ESP32 implementation
-This implementation drives the PWM at 77.5 kHZ using the led PWM library.
+This implementation drives the PWM at 77.5 kHZ using the led PWM library. Note that your ESP may be a bit off in terms of 1st harmonic frequency, if it doesn't work for you, play a bit around this setting.
 
 - Choose the pin you want to use for signal output on the ESP32 (in this example, GPIO16).
 - Wire the resistor to it and then wire the coil in series with the resistor to the GND pin on the ESP32.
@@ -35,7 +35,7 @@ This implementation drives the PWM at 77.5 kHZ using the led PWM library.
 - Some debug information is sent through the UART interface while the code is running, you can monitor it using a program like GtkTerm.
 
 ### ESP8266 implementation
-Due to limitations in the ESP8266 SDK, generating a 77.5 kHz PWM signal is not natively supported and would require re-writing a number of drivers. To make things simpler for this implementation the PWM is run at 25.833 kHz, which results in a third harmonic signal at 77.5 kHz.
+Due to limitations in the ESP8266 SDK, generating a 77.5 kHz PWM signal is not natively supported and would require re-writing a number of drivers. To make things simpler for this implementation the PWM is run at 25.833 kHz, which results in a third harmonic signal at 77.5 kHz. Note that your ESP may be a bit off in terms of 1st harmonic frequency, if it doesn't work for you, play a bit around this setting.
 
 Follow the same wiring instructions as the ESP32, choosing a suitable GPIO output pin, such as GPIO5 (also labeled as "D1" on a Lolin D1 Mini), and setting that in the .ino file.
 
