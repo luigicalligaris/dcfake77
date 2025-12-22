@@ -17,11 +17,10 @@
 #include <WiFi.h>
 #include "time.h"
 #include "dcf77protocol.h"
-// #include "dcf77protocol.c"
 
-// Set the SSID and password  below  and remove the comment marks
-//const char* wifi_ssid   = "SET_YOUR_SSID";
-//const char* wifi_pass   = "SET_YOUR_PASS";
+// Set the SSID and password below
+const char* wifi_ssid   = "SET_YOUR_SSID";
+const char* wifi_pass   = "SET_YOUR_PASS";
 
 const char* ntp_server          = "pool.ntp.org";
 const long  offset_gmt_sec      = -3 * 3600;
