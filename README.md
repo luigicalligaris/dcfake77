@@ -37,8 +37,7 @@ This implementation drives the PWM at 77.5 kHZ using the led PWM library. Note t
 ### ESP8266 implementation
 Due to limitations in the ESP8266 SDK, generating a 77.5 kHz PWM signal is not natively supported and would require re-writing a number of drivers. To make things simpler for this implementation the PWM is run at 25.833 kHz, which results in a third harmonic signal at 77.5 kHz. Note that your ESP may be a bit off in terms of 1st harmonic frequency, if it doesn't work for you, play a bit around this setting. See below a spectrum acquired with a Digilent Digital Discovery 3.
 
-<img width="1915" height="1122" alt="image" src="https://github.com/user-attachments/assets/e18758d1-96c2-437d-8691-0c456d9d89f2" />
-
+<img width="1915" height="1122" alt="529024046-e18758d1-96c2-437d-8691-0c456d9d89f2-legend" src="https://github.com/user-attachments/assets/69b839b2-08ea-4358-9f4d-041ee6c64505" />
 
 Follow the same wiring instructions as the ESP32, choosing a suitable GPIO output pin, such as GPIO5 (also labeled as "D1" on a Lolin D1 Mini), and setting that in the .ino file.
 
